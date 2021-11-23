@@ -9,7 +9,6 @@ import retrofit2.http.GET
  * Service to fetch Foodium posts using dummy end point [FOODIUM_API_URL].
  */
 interface FoodiumService {
-
     @GET("/DummyFoodiumApi/api/posts/")
     suspend fun getPosts(): Response<List<Post>>
 

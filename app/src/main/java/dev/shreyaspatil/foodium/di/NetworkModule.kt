@@ -1,26 +1,19 @@
 package dev.shreyaspatil.foodium.di
 
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dev.shreyaspatil.foodium.data.remote.api.FoodiumService
-import dev.shreyaspatil.foodium.data.repository.PostsRepository
+import dev.shreyaspatil.foodium.data.repository.DefaultPostRepository
+import dev.shreyaspatil.foodium.utils.retrofit
+import dev.shreyaspatil.foodium.utils.serialization
+import kotlinx.serialization.ExperimentalSerializationApi
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
+@ExperimentalSerializationApi
 val networkModule = module {
     single {
-        Retrofit.Builder()
-            .baseUrl(FoodiumService.FOODIUM_API_URL)
-            .addConverterFactory(
-                MoshiConverterFactory.create(
-                    Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-                )
-            )
-            .build()
-            .create(FoodiumService::class.java)
+        retrofit<FoodiumService> {
+            baseUrl(FoodiumService.FOODIUM_API_URL)
+            serialization()
+        }
     }
-    single {
-        PostsRepository(get(), get())
-    }
+    single { DefaultPostRepository(get(), get()) }
 }

@@ -5,10 +5,6 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
 val databaseModule = module {
-    single {
-        FoodiumPostsDatabase.getInstance(androidApplication())
-    }
-    single {
-        get<FoodiumPostsDatabase>().getPostsDao()
-    }
+    single { FoodiumPostsDatabase.getInstance(androidApplication()) }
+    single { get<FoodiumPostsDatabase>().getPostsDao() }
 }

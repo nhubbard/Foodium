@@ -12,20 +12,19 @@ import kotlinx.coroutines.flow.Flow
  */
 @Dao
 interface PostsDao {
-
     /**
      * Inserts [posts] into the [Post.TABLE_NAME] table.
      * Duplicate values are replaced in the table.
      * @param posts Posts
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertPosts(posts: List<Post>)
+    suspend fun addPosts(posts: List<Post>)
 
     /**
      * Deletes all the posts from the [Post.TABLE_NAME] table.
      */
     @Query("DELETE FROM ${Post.TABLE_NAME}")
-    fun deleteAllPosts()
+    suspend fun deleteAllPosts()
 
     /**
      * Fetches the post from the [Post.TABLE_NAME] table whose id is [postId].
